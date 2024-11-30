@@ -1,90 +1,107 @@
-const fetchTask = (task_id, formUpdater) => {
-  const options = {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Charset: "utf8",
-    },
+const fetchAPI = (url, method, body, funcJson, funcErr) => {
+  let headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Charset: "utf8",
   };
-  return fetch(`${import.meta.env.VITE_API_URL}/api/task/${task_id}`, options)
+
+  const token = localStorage.getItem("access-token");
+  if (token != null && token != undefined) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  let options = {
+    method: method,
+    headers: headers,
+  }
+
+  if (method != "GET" && body) {
+    options.body = JSON.stringify(body);
+  }
+
+  return fetch(`${import.meta.env.VITE_API_URL}${url}`, options)
     .then((response) => {
+      if (response.status >= 400) {
+        const error = new Error("Ошибка авторизации");
+        error.status = response.status
+        throw error;
+      }
       return response.json();
     })
     .then((responseData) => {
-      formUpdater(responseData);
+      if (funcJson && funcJson instanceof Function) {
+        funcJson(responseData);
+      }
     })
     .catch(function (res) {
-      console.warn(res);
+      if (funcErr && funcErr instanceof Function) {
+        funcErr({...res});
+      }
     });
 };
 
-const fetchTaskAdd = (user_name, user_email, text) => {
-  const options = {
-    method: "POST",
-    headers: {
-      "access-control-allow-origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Charset: "utf8",
-    },
-    body: JSON.stringify({
-      user_name: user_name,
-      user_email: user_email,
-      text: text,
-    }),
+const fetchTasks = (query_page, formUpdater) => {
+  return fetchAPI(
+    `/tasks?page=${
+      query_page ? query_page : 1
+    }`,
+    "GET",
+    undefined,
+    formUpdater,
+    undefined
+  );
+};
+
+const fetchTask = (task_id, formUpdater) => {
+  return fetchAPI(
+    `/task/${task_id}`,
+    "GET",
+    undefined,
+    formUpdater,
+    undefined
+  );
+};
+
+const fetchTaskAdd = (user_name, user_email, text, is_completed, funcProc, funcErr) => {
+  const body = {
+    user_name: user_name,
+    user_email: user_email,
+    text: text,
+    is_completed: is_completed
   };
-  return fetch(`${import.meta.env.VITE_API_URL}/api/task`, options)
-    .then(function (res) {
-      console.log(res);
-    })
-    .catch(function (res) {
-      console.log(res);
-    });
+
+  return fetchAPI(
+    "/task",
+    "POST",
+    body,
+    funcProc,
+    funcErr
+  );
 };
 
-const fetchTaskUpd = (task_id, text, is_completed) => {
-  console.log(text);
-  console.log(is_completed);
-  const options = {
-    method: "PUT",
-    headers: {
-      "access-control-allow-origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Charset: "utf8",
-    },
-    body: JSON.stringify({
-      text: text,
-      is_completed: is_completed,
-    }),
+const fetchTaskUpd = (task_id, text, is_completed, funcProc, funcErr) => {
+  const body = {
+    text: text,
+    is_completed: is_completed,
   };
-  return fetch(`${import.meta.env.VITE_API_URL}/api/task/${task_id}`, options)
-    .then(function (res) {
-      console.log(res);
-    })
-    .catch(function (res) {
-      console.log(res);
-    });
+
+  return fetchAPI(
+    `/task/${task_id}`,
+    "PUT",
+    body,
+    funcProc,
+    funcErr
+  );
 };
 
-const fetchTaskDel = (task_id) => {
-  const options = {
-    method: "DELETE",
-    headers: {
-      "access-control-allow-origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Charset: "utf8",
-    },
-  };
-  return fetch(`${import.meta.env.VITE_API_URL}/api/task/${task_id}`, options)
-    .then(function (res) {
-      console.log(res);
-    })
-    .catch(function (res) {
-      console.log(res);
-    });
+const fetchTaskDel = (task_id, funcProc, funcErr) => {
+  return fetchAPI(
+    `/task/${task_id}`,
+    "DELETE",
+    undefined,
+    funcProc,
+    funcErr
+  );
 };
 
-export { fetchTask, fetchTaskAdd, fetchTaskUpd, fetchTaskDel };
+export { fetchAPI, fetchTasks, fetchTask, fetchTaskAdd, fetchTaskUpd, fetchTaskDel };

@@ -3,39 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TaskList from "./TaskList";
 import Pagination from "./Paginator";
+import { fetchTasks } from "./api"
 
 function TaskTable({ page }) {
   const navigate = useNavigate();
   const [ans, setAns] = useState([]);
-  const options = {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Charset: "utf8",
-    },
-  };
-
-  const fetchInfo = (query_page) => {
-    return fetch(
-      `${import.meta.env.VITE_API_URL}/api/tasks?page=${
-        query_page ? query_page : 1
-      }`,
-      options
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseData) => {
-        setAns(responseData);
-      })
-      .catch(function (res) {
-        console.warn(res);
-      });
-  };
 
   useEffect(() => {
-    fetchInfo(page);
+    fetchTasks(page, setAns);
   }, []);
 
   const a = !ans || !ans.tasks;

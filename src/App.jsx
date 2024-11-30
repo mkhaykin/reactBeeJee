@@ -14,7 +14,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="login" element={<LoginForm />} />
-          <Route path="logout" element={<LoginForm />} />
           <Route path="add" element={<Task action="add"/>} />
           <Route exact path="edit/:id" element={<Task action="upd"/>} />
           <Route exact path="drop/:id" element={<Task action="del"/>} />

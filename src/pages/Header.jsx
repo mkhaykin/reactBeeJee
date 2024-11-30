@@ -1,3 +1,23 @@
+const logoutCall = () => {
+  window.localStorage.clear();
+}; 
+
+function Login() {
+  if (localStorage.getItem("is-autorized")) {
+    return (
+      <a className="nav-item nav-link" href="" onClick={logoutCall}>
+      Logout
+    </a>
+    )
+  }
+  return (
+    <a className="nav-item nav-link" href="/login">
+    Login
+  </a>
+
+  )
+}
+
 export default function Header() {
     return (
       <header className="site-header">
@@ -19,18 +39,13 @@ export default function Header() {
             </button>
             <div className="collapse navbar-collapse" id="navbarToggle">
               <div className="navbar-nav me-auto">
-                <a className="nav-item nav-link" href={`${import.meta.env.VITE_API_URL}/api/docs`} target="_blank">
+                <a className="nav-item nav-link" href={`${import.meta.env.VITE_API_URL}/docs`} target="_blank">
                   api
                 </a>
               </div>
               <div className="navbar-nav">
-                <span className="navbar-text navbar-dark">Hi ...!</span>
-                <a className="nav-item nav-link" href="/logout">
-                  Logout
-                </a>
-                <a className="nav-item nav-link" href="/login">
-                  Login
-                </a>
+                <span className="navbar-text navbar-dark">Hi {localStorage.getItem("user-name") || "..."}!</span>
+                <Login />
               </div>
             </div>
           </div>

@@ -78,7 +78,7 @@ export default function Task({ action }) {
     setText(values.text);
     setIsCompleted(values.is_completed);
   }
-  
+
   useEffect(() => {
     if (id !== undefined) {
       fetchTask(id, setValues);
@@ -89,13 +89,19 @@ export default function Task({ action }) {
     event.preventDefault();
 
     if (action === "add") {
-      fetchTaskAdd(user_name, user_email, text);
-      navigate("/");
+      fetchTaskAdd(user_name, user_email, text, is_completed, ()=>{navigate("/")});
     } else if (action === "upd") {
-      fetchTaskUpd(id, text, is_completed);
+      fetchTaskUpd(id, text, is_completed, ()=>{navigate("/")});
     } else if (action === "del") {
       if (is_confirm_deletion) {
-        fetchTaskDel(id);
+        fetchTaskDel(
+            id,
+            undefined,
+            () => {
+              alert("Ошибка удаления!");
+              navigate("/login");
+            },
+        );
         navigate("/");
       } else {
         alert("Для удаления установите флагом 'Confirm deletion'.");
@@ -195,19 +201,22 @@ export default function Task({ action }) {
           <button className="btn btn-outline-info" type="Submit">
             {rendTitle(action)}
           </button>
-          <input type="button" className="btn btn-outline-info" onClick={()=> navigate('/')} value="Back to list"/>
+          <input
+            type="button"
+            className="btn btn-outline-info"
+            onClick={() => navigate("/")}
+            value="Back to list"
+          />
         </div>
       </form>
     </div>
   );
 }
 
-
-
 Input.propTypes = {
-    labelText: PropTypes.string.isRequired,
-    itemName: PropTypes.string.isRequired,
-    itemType: PropTypes.string,
+  labelText: PropTypes.string.isRequired,
+  itemName: PropTypes.string.isRequired,
+  itemType: PropTypes.string,
 };
 
 Text.propTypes = {
