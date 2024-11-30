@@ -124,6 +124,7 @@ export default function Task({ action }) {
         placeholder="enter user email..."
         disabled={action !== "add"}
         value={user_email}
+        type="email"
         onChange={(e) => setUserEmail(e.target.value)}
       />
     );
