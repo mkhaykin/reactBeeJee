@@ -44,9 +44,9 @@ const fetchAPI = (url, method, body, funcJson, funcErr) => {
     });
 };
 
-const fetchTasks = (query_page, formUpdater) => {
+const fetchTasks = (query_page, formUpdater, sort_by) => {
   return fetchAPI(
-    `/tasks?page=${query_page ? query_page : 1}`,
+    `/tasks?page=${query_page ? query_page : 1}&sort_by=${sort_by ? sort_by : 2}`,
     "GET",
     undefined,
     formUpdater,

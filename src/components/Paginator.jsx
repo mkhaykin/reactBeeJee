@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Pagination = ({ totalPages, currentPage }) => {
+const Pagination = ({ totalPages, currentPage, sort_by }) => {
   const pageNumbers = [];
 
   let li = Math.max(currentPage - 3, 1);
@@ -33,7 +33,7 @@ const Pagination = ({ totalPages, currentPage }) => {
               key={ number }
               className={`page-item ${currentPage === number ? "active" : ""}`}
             >
-              <a key={{ number }} href={`/?page=${number}`} className="page-link">
+              <a key={{ number }} href={`/?page=${number}&sort_by=${sort_by}`} className="page-link">
                 {number}
               </a>{" "}
             </li>
@@ -54,6 +54,7 @@ const Pagination = ({ totalPages, currentPage }) => {
 Pagination.propTypes = {
   totalPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
+  sort_by: PropTypes.number.isRequired,
 };
 
 export default Pagination;
