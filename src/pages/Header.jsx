@@ -39,7 +39,7 @@ export default function Header() {
             </button>
             <div className="collapse navbar-collapse" id="navbarToggle">
               <div className="navbar-nav me-auto">
-                <a className="nav-item nav-link" href={`${import.meta.env.VITE_API_URL}/docs`} target="_blank">
+                <a className="nav-item nav-link" href="http://beejee.khaykin.app/api/docs" target="_blank">
                   api
                 </a>
               </div>
