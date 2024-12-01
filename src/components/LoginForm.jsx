@@ -74,9 +74,12 @@ export default function LoginForm() {
           <button className="btn btn-outline-info" type="Submit">
             Login
           </button>
-          <button className="btn btn-outline-info" onClick={() => {navigate(-1)}}>
-            Go Back
-          </button>
+          <input
+            type="button"
+            className="btn btn-outline-info"
+            onClick={() => navigate(-1)}
+            value="Go Back"
+          />
         </div>
       </form>
     </div>
