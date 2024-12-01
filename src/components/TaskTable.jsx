@@ -26,6 +26,7 @@ function TaskTable({ page }) {
               <th scope="col">User email</th>
               <th scope="col">Task</th>
               <th scope="col">Finished</th>
+              <th scope="col">Status</th>
               <th colSpan="2">
                 <button
                   onClick={() => {

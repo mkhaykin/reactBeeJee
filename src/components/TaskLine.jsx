@@ -8,6 +8,7 @@ function TaskLine( item ) {
       <td>{item.user_email}</td>
       <td>{item.text}</td>
       <td align="center">{item.is_completed ? "✔" : ""}</td>
+      <td>{item.status}</td>
       <td>
         <a href={"edit/" + item.task_id }>
         <img src="/icon-edit.png"/>
