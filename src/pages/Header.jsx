@@ -24,7 +24,7 @@ export default function Header() {
         <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
           <div className="container">
             <a className="navbar-brand mr-4" href="/">
-              TODO list
+              TODO list (React)
             </a>
             <button
               className="navbar-toggler"
