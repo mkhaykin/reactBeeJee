@@ -1,0 +1,24 @@
+# docker-compose.yml
+
+version: "3.9"
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react_beejee
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      # VITE_API_HOST=app
+      # VITE_API_PORT=5000
+    ports:
+      - "8091:8000"
+    # depends_on:
+      # - app
+
+networks:
+  default:
+      name: lan_beejee
