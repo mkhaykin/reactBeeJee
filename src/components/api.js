@@ -96,4 +96,5 @@ export {
   fetchTaskAdd,
   fetchTaskUpd,
   fetchTaskDel,
+  API_URL,
 };
