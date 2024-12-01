@@ -91,7 +91,7 @@ export default function Task({ action }) {
     if (action === "add") {
       fetchTaskAdd(user_name, user_email, text, is_completed, ()=>{navigate("/")});
     } else if (action === "upd") {
-      fetchTaskUpd(id, text, is_completed, ()=>{navigate("/")});
+      fetchTaskUpd(id, text, is_completed, ()=>{navigate("/")}, ()=>{navigate("/login")});
     } else if (action === "del") {
       if (is_confirm_deletion) {
         fetchTaskDel(
