@@ -8,7 +8,7 @@ import { fetchTasks } from "./api";
 function TaskTable({ page }) {
   const navigate = useNavigate();
   const [ans, setAns] = useState([]);
-  const [sort_by, setSortBy] = useState(localStorage.getItem("sort_by") || 2);
+  const [sort_by, setSortBy] = useState(parseInt(localStorage.getItem("sort_by") || 2));
 
   useEffect(() => {
     localStorage.setItem("sort_by", sort_by);
