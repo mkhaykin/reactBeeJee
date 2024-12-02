@@ -79,6 +79,14 @@ export default function Task({ action }) {
     setIsCompleted(values.is_completed);
   }
 
+  function AddError(e) {
+    if (e.status == 400) {
+      alert("Api error: incorrect email.");
+    } else {
+      alert("Api error, try later ...");
+    }
+  }
+
   useEffect(() => {
     if (id !== undefined) {
       fetchTask(id, setValues);
@@ -89,7 +97,7 @@ export default function Task({ action }) {
     event.preventDefault();
 
     if (action === "add") {
-      fetchTaskAdd(user_name, user_email, text, is_completed, ()=>{navigate("/")});
+      fetchTaskAdd(user_name, user_email, text, is_completed, ()=>{navigate("/")}, AddError);
     } else if (action === "upd") {
       fetchTaskUpd(id, text, is_completed, ()=>{navigate("/")}, ()=>{navigate("/login")});
     } else if (action === "del") {
@@ -104,7 +112,7 @@ export default function Task({ action }) {
         );
         navigate("/");
       } else {
-        alert("Для удаления установите флагом 'Confirm deletion'.");
+        alert("To delete, set the flag 'Confirm deletion'.");
       }
     }
   }
