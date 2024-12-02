@@ -26,7 +26,7 @@ const fetchAPI = (url, method, body, funcJson, funcErr) => {
   return fetch(`${API_URL}${url}`, options)
     .then((response) => {
       if (response.status >= 400) {
-        const error = new Error("Ошибка авторизации");
+        const error = new Error("query api error");
         error.status = response.status;
         throw error;
       }
