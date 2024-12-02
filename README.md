@@ -1,7 +1,5 @@
 # reactBeeJee
 
-# pythonBeeJee
-
 Данный репозиторий - часть тестового задания (frontend).
 [Репозиторий backend](https://github.com/mkhaikin/pythonBeeJee)
 
